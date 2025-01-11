@@ -78,7 +78,7 @@ app.put("/api/expenses/:id", async (req, res) => {
             { title, amount }
         );
 
-        if (!updateExpenses) {
+        if (UpdateExpenses) {
             return res.status(404).json({ message: "Expense not found" });
         }
         res.status(200).json({ title, amount });
