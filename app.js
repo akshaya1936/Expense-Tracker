@@ -8,7 +8,7 @@ const mongoose = require("mongoose")
 const app = express();
 const port = 3000;
 
-const mongourl = "mongodb://localhost:27017/practice"
+const mongourl = "mongodb+srv://akshaya:akshaya@cluster0.hn97fvw.mongodb.net/"
 mongoose.connect(mongourl)
     .then(() => {
         console.log("Database Connected successfully")
@@ -88,4 +88,28 @@ app.put("/api/expenses/:id", async (req, res) => {
 });
 
 
+app.delete("/api/expenses/:id", async (req, res) => {
+    const { id } = req.params;
+    const { title, amount } = req.body;
+    console.log({ title })
+    try {
+        const deleteExpenses = await expenseModel.findOneAndDelete(
+            { id },
+            { title, amount }
+        );
 
+        if (deleteExpenses) {
+            return res.status(404).json({ message: "Expense not found" });
+        }
+        res.status(200).json({ title, amount });
+    } catch (error) {
+        res.status(500).json({ message: "Error in deleting expense" });
+    }
+});
+
+
+
+
+
+
+ 
